@@ -79,8 +79,9 @@ class NotificationService:
 
     def _send_email(self, config: dict, title: str, content: str):
         """SMTP 邮件通知"""
+        from app.core.security import sanitize_email_header
         msg = MIMEMultipart("alternative")
-        msg["Subject"] = title
+        msg["Subject"] = sanitize_email_header(title)
         msg["From"] = config.get("smtp_user", "")
         msg["To"] = config.get("to_email", "")
 

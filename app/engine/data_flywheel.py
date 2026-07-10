@@ -113,6 +113,13 @@ class DataFlywheel:
                 test_images: list[str]) -> dict:
         """A/B 测试：对比两个模型效果"""
         from ultralytics import YOLO
+        from app.core.security import validate_model_path
+
+        # 路径安全校验
+        for path in [model_a_path, model_b_path]:
+            ok, reason = validate_model_path(path)
+            if not ok:
+                raise ValueError(f"模型路径校验失败 [{path}]: {reason}")
 
         def _eval(model_path, images):
             model = YOLO(model_path)
