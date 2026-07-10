@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>智能视觉报告生成与多模态质检系统 — 项目大纲</title>
+<style>
+  :root{--bg:#0a0e17;--card:#111827;--border:#1e293b;--green:#10b981;--blue:#3b82f6;
+         --purple:#8b5cf6;--orange:#f59e0b;--red:#ef4444;--text:#e2e8f0;--muted:#94a3b8}
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter','Segoe UI',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+  .hero{background:linear-gradient(135deg,#0f172a 0%,#1e1b4b 50%,#0f172a 100%);padding:60px 24px;text-align:center;border-bottom:1px solid var(--border)}
+  .hero h1{font-size:2.2em;background:linear-gradient(90deg,var(--green),var(--blue),var(--purple));-webkit-background-clip:text;-webkit-text-fill-color:transparent;margin-bottom:12px}
+  .hero p{color:var(--muted);font-size:1.1em;max-width:700px;margin:0 auto}
+  .hero .tags{display:flex;gap:10px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+  .hero .tag{padding:6px 16px;border-radius:20px;font-size:13px;font-weight:600}
+  .tag.cv{background:rgba(16,185,129,.15);color:var(--green)}
+  .tag.llm{background:rgba(139,92,246,.15);color:var(--purple)}
+  .tag.full{background:rgba(59,130,246,.15);color:var(--blue)}
+  .tag.dual{background:rgba(245,158,11,.15);color:var(--orange)}
+
+  .container{max-width:1100px;margin:0 auto;padding:40px 24px}
+  h2{font-size:1.5em;margin:40px 0 20px;display:flex;align-items:center;gap:10px}
+  h2 .dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+  h2 .dot.green{background:var(--green)}h2 .dot.blue{background:var(--blue)}
+  h2 .dot.purple{background:var(--purple)}h2 .dot.orange{background:var(--orange)}
+
+  .arch-flow{display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:center;padding:30px 0}
+  .arch-node{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;text-align:center;min-width:140px}
+  .arch-node .icon{font-size:2em;margin-bottom:8px}
+  .arch-node .title{font-weight:700;font-size:14px}
+  .arch-node .sub{color:var(--muted);font-size:12px;margin-top:4px}
+  .arch-arrow{font-size:1.5em;color:var(--muted)}
+  .arch-node.yolo{border-color:rgba(16,185,129,.4)}
+  .arch-node.llm{border-color:rgba(139,92,246,.4)}
+  .arch-node.out{border-color:rgba(59,130,246,.4)}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px;margin:20px 0}
+  .card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:24px}
+  .card h3{font-size:1.1em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+  .card ul{list-style:none;padding:0}
+  .card li{padding:6px 0;color:var(--muted);font-size:14px;border-bottom:1px solid rgba(30,41,59,.5)}
+  .card li:last-child{border-bottom:none}
+  .card li::before{content:"▸ ";color:var(--green)}
+
+  .tech-table{width:100%;border-collapse:collapse;margin:20px 0}
+  .tech-table th{text-align:left;padding:10px 14px;background:var(--card);color:var(--green);font-size:13px;border-bottom:2px solid var(--border)}
+  .tech-table td{padding:10px 14px;font-size:13px;border-bottom:1px solid rgba(30,41,59,.5)}
+  .tech-table tr:hover td{background:rgba(255,255,255,.02)}
+
+  .lang-tabs{display:flex;gap:0;margin:20px 0}
+  .lang-tab{padding:10px 24px;border:1px solid var(--border);cursor:pointer;font-weight:600;font-size:14px;
+            background:var(--card);color:var(--muted);transition:all .2s}
+  .lang-tab:first-child{border-radius:8px 0 0 8px}
+  .lang-tab:last-child{border-radius:0 8px 8px 0}
+  .lang-tab.active{background:var(--blue);color:#fff;border-color:var(--blue)}
+
+  .dir-tree{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:'JetBrains Mono','Fira Code',monospace;font-size:13px;line-height:1.8;overflow-x:auto;display:none}
+  .dir-tree.active{display:block}
+  .dir-tree .d{color:var(--blue)}.dir-tree .f{color:var(--text)}.dir-tree .c{color:var(--muted)}
+
+  footer{text-align:center;color:var(--muted);padding:40px;font-size:13px;border-top:1px solid var(--border);margin-top:40px}
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>智能视觉报告生成与多模态质检系统</h1>
+  <p>YOLOv8 目标检测 → 大模型语义分析 → 结构化质检报告 + 合格判定 — 一条链路打通视觉与大模型</p>
+  <div class="tags">
+    <span class="tag cv">YOLOv8 视觉检测</span>
+    <span class="tag llm">LLM 语义报告</span>
+    <span class="tag full">Python + C# 双版本</span>
+    <span class="tag dual">Web + 桌面端</span>
+  </div>
+</div>
+
+<div class="container">
+
+<h2><span class="dot green"></span>核心流程</h2>
+<div class="arch-flow">
+  <div class="arch-node yolo">
+    <div class="icon">📸</div>
+    <div class="title">图像输入</div>
+    <div class="sub">拍照 / 上传 / 批量</div>
+  </div>
+  <div class="arch-arrow">→</div>
+  <div class="arch-node yolo">
+    <div class="icon">🔍</div>
+    <div class="title">YOLOv8 检测</div>
+    <div class="sub">缺陷定位 + 分类 + 计数</div>
+  </div>
+  <div class="arch-arrow">→</div>
+  <div class="arch-node llm">
+    <div class="icon">🧠</div>
+    <div class="title">LLM 分析</div>
+    <div class="sub">Prompt 模板 + 结构化</div>
+  </div>
+  <div class="arch-arrow">→</div>
+  <div class="arch-node out">
+    <div class="icon">📋</div>
+    <div class="title">报告 + 判定</div>
+    <div class="sub">PDF / HTML / Markdown</div>
+  </div>
+</div>
+
+<h2><span class="dot blue"></span>功能模块设计</h2>
+<div class="grid">
+  <div class="card">
+    <h3>🔍 视觉检测引擎</h3>
+    <ul>
+      <li>YOLOv8 多类别缺陷检测（裂纹/划痕/凹坑/脏污等）</li>
+      <li>输出：缺陷类型 + bbox 坐标 + 置信度 + 面积占比</li>
+      <li>支持 ONNX Runtime 加速推理</li>
+      <li>批量图像处理 + 结果缓存</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>🧠 LLM 分析层</h3>
+    <ul>
+      <li>将检测结果转为结构化文本 prompt</li>
+      <li>调用大模型生成自然语言描述报告</li>
+      <li>支持 OpenAI / Claude / 本地模型（Ollama）</li>
+      <li>Prompt 模板可配置（制造业/质检/通用）</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>📋 报告生成</h3>
+    <ul>
+      <li>结构化 JSON → Markdown / HTML / PDF</li>
+      <li>缺陷数量统计 + 位置标注图</li>
+      <li>严重程度评级（轻微/中等/严重）</li>
+      <li>历史报告对比 + 趋势分析</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>✅ 多模态质检判定</h3>
+    <ul>
+      <li>结合检测结果 + 规则引擎 → 合格/不合格</li>
+      <li>LLM 给出判定理由（自然语言解释）</li>
+      <li>可配置质量标准（数量阈值 / 面积阈值）</li>
+      <li>批量抽检 + 批次合格率统计</li>
+    </ul>
+  </div>
+</div>
+
+<h2><span class="dot purple"></span>技术栈</h2>
+<table class="tech-table">
+  <tr><th>层级</th><th>Python 版</th><th>C# 版</th></tr>
+  <tr>
+    <td>视觉检测</td>
+    <td>YOLOv8 (ultralytics) + ONNX Runtime</td>
+    <td>YOLOv8 ONNX + ML.NET / Emgu.CV</td>
+  </tr>
+  <tr>
+    <td>LLM 调用</td>
+    <td>openai / anthropic / ollama SDK</td>
+    <td>HttpClient + System.Text.Json</td>
+  </tr>
+  <tr>
+    <td>后端框架</td>
+    <td>FastAPI + uvicorn</td>
+    <td>ASP.NET Core Minimal API</td>
+  </tr>
+  <tr>
+    <td>报告渲染</td>
+    <td>Jinja2 → HTML / WeasyPrint → PDF</td>
+    <td>Razor → HTML / PuppeteerSharp → PDF</td>
+  </tr>
+  <tr>
+    <td>前端 UI</td>
+    <td>Vue 3 + ECharts</td>
+    <td>WPF / Blazor Server</td>
+  </tr>
+  <tr>
+    <td>数据存储</td>
+    <td>SQLite / PostgreSQL</td>
+    <td>SQLite / SQL Server</td>
+  </tr>
+</table>
+
+<h2><span class="dot orange"></span>项目目录结构</h2>
+<div class="lang-tabs">
+  <button class="lang-tab active" onclick="switchTab('python')">Python 版</button>
+  <button class="lang-tab" onclick="switchTab('csharp')">C# 版</button>
+</div>
+<pre class="dir-tree active" id="python">
+<span class="c"># Python 版本</span>
+vision-inspection-report/
+├── <span class="d">app/</span>                          <span class="c"># 应用层</span>
+│   ├── <span class="d">api/</span>                      <span class="c"># FastAPI 路由</span>
+│   │   ├── routes_detect.py       <span class="c"># 检测接口 POST /detect</span>
+│   │   ├── routes_report.py       <span class="c"># 报告接口 POST /generate-report</span>
+│   │   └── routes_quality.py      <span class="c"># 质检接口 POST /quality-check</span>
+│   ├── <span class="d">core/</span>
+│   │   ├── config.py              <span class="c"># Pydantic Settings</span>
+│   │   ├── prompts.py             <span class="c"># LLM Prompt 模板管理</span>
+│   │   └── quality_rules.py       <span class="c"># 质检规则引擎</span>
+│   ├── <span class="d">engine/</span>
+│   │   ├── detector.py            <span class="c"># YOLOv8 检测封装</span>
+│   │   ├── llm_client.py          <span class="c"># 多 LLM 适配层</span>
+│   │   └── report_builder.py      <span class="c"># 报告结构化构建</span>
+│   └── <span class="d">templates/</span>                <span class="c"># Jinja2 报告模板</span>
+│       ├── report_standard.html
+│       ├── report_quality.html
+│       └── report_defect.md.j2
+├── <span class="d">models/</span>                       <span class="c"># YOLO 模型 + ONNX</span>
+├── <span class="d">tests/</span>
+│   ├── test_detector.py
+│   ├── test_llm_client.py
+│   └── test_report_builder.py
+├── main.py
+├── requirements.txt
+└── Dockerfile
+</pre>
+<pre class="dir-tree" id="csharp">
+<span class="c">// C# 版本</span>
+VisionInspectionReport/
+├── <span class="d">VisionInspectionReport.Api/</span>    <span class="c"># ASP.NET Core Minimal API</span>
+│   ├── Program.cs
+│   ├── Endpoints/
+│   │   ├── DetectEndpoints.cs       <span class="c"># POST /detect</span>
+│   │   ├── ReportEndpoints.cs       <span class="c"># POST /generate-report</span>
+│   │   └── QualityEndpoints.cs      <span class="c"># POST /quality-check</span>
+│   └── appsettings.json
+├── <span class="d">VisionInspectionReport.Core/</span>    <span class="c"># 核心业务逻辑</span>
+│   ├── Models/
+│   │   ├── DetectionResult.cs       <span class="c"># 检测结果模型</span>
+│   │   ├── InspectionReport.cs      <span class="c"># 报告模型</span>
+│   │   └── QualityVerdict.cs        <span class="c"># 质检判定模型</span>
+│   ├── Engine/
+│   │   ├── YoloDetector.cs          <span class="c"># YOLO ONNX 推理（Emgu.CV）</span>
+│   │   └── LLMClient.cs             <span class="c"># OpenAI/Claude API 调用</span>
+│   ├── Services/
+│   │   ├── ReportBuilder.cs         <span class="c"># 报告生成服务</span>
+│   │   └── QualityChecker.cs        <span class="c"># 质检判定逻辑</span>
+│   └── Prompts/
+│       └── PromptTemplates.cs       <span class="c"># Prompt 模板</span>
+├── <span class="d">VisionInspectionReport.Wpf/</span>     <span class="c"># WPF 桌面客户端</span>
+│   ├── MainWindow.xaml
+│   ├── ViewModels/
+│   │   └── InspectionViewModel.cs
+│   └── Views/
+│       ├── DetectView.xaml
+│       └── ReportView.xaml
+├── <span class="d">tests/</span>
+│   └── VisionInspectionReport.Tests/
+└── VisionInspectionReport.sln
+</pre>
+
+<h2><span class="dot green"></span>LLM Prompt 工作流（核心亮点）</h2>
+<pre style="background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px;font-size:13px;line-height:1.8;overflow-x:auto;margin:20px 0">
+<span class="c"># 第一步：检测结果 → 结构化 JSON</span>
+{
+  "image": "product_001.jpg",
+  "timestamp": "2026-07-10T10:30:00",
+  "detections": [
+    {"class": "scratch", "confidence": 0.95, "bbox": [120,85,215,178], "area_pct": 2.3},
+    {"class": "scratch", "confidence": 0.88, "bbox": [340,220,550,235], "area_pct": 0.8},
+    {"class": "dent",     "confidence": 0.72, "bbox": [400,300,450,355], "area_pct": 1.5}
+  ],
+  "summary": {"total_defects": 3, "classes": {"scratch": 2, "dent": 1}}
+}
+
+<span class="c"># 第二步：结构化数据 → Prompt 模板 → LLM</span>
+你是一名工业质检专家。根据以下检测数据，生成一份质检报告。
+
+检测数据：
+- 划痕 (scratch)：2 处，面积占比 2.3% / 0.8%
+- 凹坑 (dent)：1 处，面积占比 1.5%
+
+请生成：
+1. 缺陷描述（自然语言，精确到位置和严重程度）
+2. 合格判定（阈值：单缺陷面积 < 3%，总缺陷面积 < 5%）
+3. 维修建议
+
+<span class="c"># 第三步：LLM 输出 → 结构化报告 → HTML/PDF</span>
+</pre>
+
+<h2><span class="dot blue"></span>面试叙事逻辑</h2>
+<div class="grid">
+  <div class="card">
+    <h3>🎯 痛点</h3>
+    <ul>
+      <li>传统质检依赖人工目视，效率低、标准不统一</li>
+      <li>检测系统只输出 bbox 数字，非技术人员看不懂</li>
+      <li>报告撰写占质检员 40% 工作时间</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>💡 方案</h3>
+    <ul>
+      <li>YOLOv8 做检测 → 输出结构化缺陷数据</li>
+      <li>LLM 做"翻译官"→ 数字转自然语言</li>
+      <li>Prompt 模板 + 规则引擎 → 可配置质检标准</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h3>📊 成果</h3>
+    <ul>
+      <li>检测速度：&lt; 50ms/张（GPU）</li>
+      <li>报告生成：&lt; 2 秒（含 LLM 调用）</li>
+      <li>质检准确率：95%+（与人工对比）</li>
+      <li>报告可读性：非技术人员可直接理解</li>
+    </ul>
+  </div>
+</div>
+
+</div>
+<footer>
+  智能视觉报告生成与多模态质检系统 · Python + C# 双版本 · 项目大纲 v1.0
+</footer>
+
+<script>
+function switchTab(lang) {
+  document.querySelectorAll('.lang-tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.dir-tree').forEach(t => t.classList.remove('active'));
+  document.querySelector('.lang-tab[onclick*="'+lang+'"]').classList.add('active');
+  document.getElementById(lang).classList.add('active');
+}
+</script>
+</body>
+</html>

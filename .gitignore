@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+
+# 密钥 + 数据库（防止 API Key 泄露）
+*.db
+.env
+
+# 上传文件
+data/uploads/
+
+# 模型文件（首次运行自动下载）
+yolov8n.pt
+models/*.pt
+models/*.onnx
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db

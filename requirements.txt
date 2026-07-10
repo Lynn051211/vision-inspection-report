@@ -1,0 +1,24 @@
+# Web 框架
+fastapi>=0.100.0
+uvicorn[standard]>=0.20.0
+python-multipart>=0.0.6
+
+# 视觉检测
+ultralytics>=8.0.0
+opencv-python>=4.8.0
+onnxruntime>=1.15.0
+
+# LLM 调用
+openai>=1.0.0
+
+# 加密
+cryptography>=41.0.0
+
+# 配置管理
+pydantic-settings>=2.0.0
+
+# 日志
+loguru>=0.7.0
+
+# 数据处理
+numpy>=1.24.0
